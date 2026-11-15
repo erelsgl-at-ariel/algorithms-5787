@@ -13,11 +13,12 @@ import cvxpy, numpy as np
 print("\nFinding rents for maximum-value matching {('salon', 'aya'), ('heder', 'batya'), ('martef', 'gila')}:")
 
 price_martef, price_heder, price_salon = cvxpy.Variable(), cvxpy.Variable(), cvxpy.Variable()
+min_price = cvxpy.Variable()
 prob = cvxpy.Problem(
     # cvxpy.Minimize(0),
     cvxpy.Minimize(price_heder),
     constraints = [price_martef + price_heder + price_salon == 1000,
-                   # price_martef >= 0, price_heder >= 0, price_salon >= 0,
+                   price_martef > 0, price_heder > 0, price_salon > 0,
             35 - price_salon >= 40 - price_heder,
             35 - price_salon >= 25 - price_martef,  # aya does not envy
 
